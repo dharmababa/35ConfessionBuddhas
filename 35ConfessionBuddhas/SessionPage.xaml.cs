@@ -46,7 +46,7 @@ namespace _35ConfessionBuddhas
                 if (track >= 1 && track <=3)
                     imageName = "Buddha Shakyamuni";
                 else if (track >= 4 && track <= 39)
-                    imageName = "35CB-" + (track - 3);
+                    imageName = (track - 3).ToString() + "-35CB-";
                 else if (track >= 40 && track <= 41)
                         imageName = "Buddha Shakyamuni";
                 else if (track >= 42 && track <= 43)
