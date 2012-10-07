@@ -20,6 +20,9 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="35CB_AudioPlaybackAgent" Source="35CB_AudioPlaybackAgent" Type="35CB_AudioPlaybackAgent.AudioPlayer" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="_35ConfessionBuddhasToken" TaskName="_default">

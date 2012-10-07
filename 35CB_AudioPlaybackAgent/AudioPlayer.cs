@@ -12,7 +12,7 @@ namespace _35CB_AudioPlaybackAgent
         private const string ARTIST = "New Kadampa Tradition";
         private const string ALBUM = "The Bodhisattva's Confessions of Moral Downfalls";
 
-        // static int currentTrackNumber = 0;
+        static int currentTrackNumber = 0;
         
         // Initialize playlist - remaining tracks are added in the constructor.
         private static List<AudioTrack> _playlist = new List<AudioTrack>
@@ -142,7 +142,7 @@ namespace _35CB_AudioPlaybackAgent
                 case UserAction.Play:
                     if (player.PlayerState != PlayState.Playing)
                     {
-                        player.Play();
+                        PlayTrack(player);
                     }
                     break;
                 case UserAction.Stop:
@@ -175,6 +175,11 @@ namespace _35CB_AudioPlaybackAgent
             NotifyComplete();
         }
 
+        private void PlayTrack(BackgroundAudioPlayer player) {
+            // Sets the track to play. When the TrackReady state is received, 
+            // playback begins from the OnPlayStateChanged handler.
+            player.Track = _playlist[currentTrackNumber];
+        }
 
         /// <summary>
         /// Implements the logic to get the next AudioTrack instance.

@@ -229,7 +229,12 @@
     <Content Include="Images\Buddha Shakyamuni.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\35CB_AudioPlaybackAgent\35CB_AudioPlaybackAgent.csproj">
+      <Project>{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}</Project>
+      <Name>35CB_AudioPlaybackAgent</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
