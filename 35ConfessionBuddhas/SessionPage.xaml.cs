@@ -24,11 +24,11 @@ namespace _35ConfessionBuddhas
             // Start the audio
             BackgroundAudioPlayer.Instance.Play();
 
-            imgDeity.Source = new BitmapImage(new Uri("/images/Buddha Shakyamuni.png", UriKind.Relative));
+            //imgDeity.Source = new BitmapImage(new Uri("/images/Buddha Shakyamuni.png", UriKind.Relative));
         }
 
         private void Instance_PlayStateChanged(object sender, EventArgs e)
-        {            
+        {
             if (null != BackgroundAudioPlayer.Instance.Track)
             {
                 SetImageForTrack(BackgroundAudioPlayer.Instance.Track.Tag);
@@ -43,23 +43,22 @@ namespace _35ConfessionBuddhas
                 string imageName = String.Empty;
 
                 // Figure out image based on track number
-                if (track >= 1 && track <=3)
+                if (track >= 1 && track <= 3)
                     imageName = "Buddha Shakyamuni";
                 else if (track >= 4 && track <= 39)
-                    imageName = (track - 3).ToString() + "-35CB-";
+                    imageName = (track - 3).ToString() + "-35CB";
                 else if (track >= 40 && track <= 41)
-                        imageName = "Buddha Shakyamuni";
+                    imageName = "Buddha Shakyamuni";
                 else if (track >= 42 && track <= 43)
-                        imageName = "Je Tsongkhapa";
+                    imageName = "Je Tsongkhapa";
 
-               // Set image
+                // Set image
                 imgDeity.Source = new BitmapImage(new Uri("/Images/" + imageName + ".png", UriKind.Relative));
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("SetImageForTrack: " + e.Message);
             }
-
-        }
+        }       
     }
 }

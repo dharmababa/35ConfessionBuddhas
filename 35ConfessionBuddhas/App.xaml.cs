@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -57,6 +59,9 @@ namespace _35ConfessionBuddhas
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+            // Copy media to isolated storage.
+            CopyToIsolatedStorage();
+
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -100,6 +105,43 @@ namespace _35ConfessionBuddhas
             {
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
+            }
+        }
+
+        private void CopyToIsolatedStorage()
+        {
+            using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                string[] files = new string[43] { "Liberating Prayer.mp3", "Homage.mp3", "Refuge.mp3", "Prostration-1.mp3",
+                    "Prostration-2.mp3", "Prostration-3.mp3", "Prostration-4.mp3", "Prostration-5.mp3", "Prostration-6.mp3", 
+                    "Prostration-7.mp3", "Prostration-8.mp3", "Prostration-9.mp3", "Prostration-10.mp3", "Prostration-11.mp3", 
+                    "Prostration-12.mp3", "Prostration-13.mp3", "Prostration-14.mp3", "Prostration-15.mp3", "Prostration-16.mp3", 
+                    "Prostration-17.mp3", "Prostration-18.mp3", "Prostration-19.mp3", "Prostration-20.mp3", "Prostration-21.mp3", 
+                    "Prostration-22.mp3", "Prostration-23.mp3", "Prostration-24.mp3", "Prostration-25.mp3", "Prostration-26.mp3", 
+                    "Prostration-27.mp3", "Prostration-28.mp3", "Prostration-29.mp3", "Prostration-30.mp3", "Prostration-31.mp3", 
+                    "Prostration-32.mp3", "Prostration-33.mp3", "Prostration-34.mp3", "Prostration-35.mp3", "Confession.mp3",
+                    "Dedication.mp3", "Conclusion.mp3", "Prayers for the Virtuous Tradition.mp3", "Nine-line Migtsema Prayer.mp3" };
+
+                foreach (var _fileName in files)
+                {
+                    if (!storage.FileExists(_fileName))
+                    {
+                        string _filePath = "Audio/" + _fileName;
+                        StreamResourceInfo resource = Application.GetResourceStream(new Uri(_filePath, UriKind.Relative));
+
+                        using (IsolatedStorageFileStream file = storage.CreateFile(_fileName))
+                        {
+                            int chunkSize = 4096;
+                            byte[] bytes = new byte[chunkSize];
+                            int byteCount;
+
+                            while ((byteCount = resource.Stream.Read(bytes, 0, chunkSize)) > 0)
+                            {
+                                file.Write(bytes, 0, byteCount);
+                            }
+                        }
+                    }
+                }
             }
         }
 
