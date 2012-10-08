@@ -3,25 +3,12 @@
   <App xmlns="" ProductID="{e16a6528-8e2a-4a0f-b7da-4a5510a5e4eb}" Title="The Bodhisattva's Confession of Moral Downfalls" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="_35ConfessionBuddhas author" Description="Sample description" Publisher="_35ConfessionBuddhas">
     <IconPath IsRelative="true" IsResource="false">elephant_square_99x99.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_GAMERSERVICES" />
-      <Capability Name="ID_CAP_IDENTITY_DEVICE" />
-      <Capability Name="ID_CAP_IDENTITY_USER" />
-      <Capability Name="ID_CAP_LOCATION" />
       <Capability Name="ID_CAP_MEDIALIB" />
-      <Capability Name="ID_CAP_MICROPHONE" />
-      <Capability Name="ID_CAP_NETWORKING" />
-      <Capability Name="ID_CAP_PHONEDIALER" />
-      <Capability Name="ID_CAP_PUSH_NOTIFICATION" />
-      <Capability Name="ID_CAP_SENSORS" />
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
-      <Capability Name="ID_CAP_ISV_CAMERA" />
-      <Capability Name="ID_CAP_CONTACTS" />
-      <Capability Name="ID_CAP_APPOINTMENTS" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
       <ExtendedTask Name="BackgroundTask">
-        <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="35CB_AudioPlaybackAgent" Source="35CB_AudioPlaybackAgent" Type="35CB_AudioPlaybackAgent.AudioPlayer" />
+        <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="35CB_AudioPlaybackAgent" Source="35CB_AudioPlaybackAgent" Type="_35CB_AudioPlaybackAgent.AudioPlayer" />
       </ExtendedTask>
     </Tasks>
     <Tokens>

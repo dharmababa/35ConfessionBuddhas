@@ -179,6 +179,7 @@ namespace _35CB_AudioPlaybackAgent
             // Sets the track to play. When the TrackReady state is received, 
             // playback begins from the OnPlayStateChanged handler.
             player.Track = _playlist[currentTrackNumber];
+            player.Play();
         }
 
         /// <summary>
