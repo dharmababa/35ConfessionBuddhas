@@ -41,7 +41,7 @@ namespace _35CB_AudioPlaybackAgent
 
                 // Add prostration tracks
                 for (int i = 1; i <= 35; i++) {
-                    _playlist.Add(new AudioTrack(new Uri("Prostration-" + i.ToString(), UriKind.Relative), "Prostration", 
+                    _playlist.Add(new AudioTrack(new Uri("Prostration-" + i.ToString() + ".mp3", UriKind.Relative), "Prostration", 
                         ARTIST, ALBUM, null, (i+3).ToString(), EnabledPlayerControls.All));
                 }
 
@@ -90,7 +90,8 @@ namespace _35CB_AudioPlaybackAgent
             switch (playState)
             {
                 case PlayState.TrackEnded:
-                    player.Track = GetPreviousTrack();
+                    player.Track = GetNextTrack();
+                    player.Play();
                     break;
                 case PlayState.TrackReady:
                     player.Play();
@@ -162,6 +163,7 @@ namespace _35CB_AudioPlaybackAgent
                     break;
                 case UserAction.SkipNext:
                     player.Track = GetNextTrack();
+                    player.Play();
                     break;
                 case UserAction.SkipPrevious:
                     AudioTrack previousTrack = GetPreviousTrack();
@@ -195,13 +197,7 @@ namespace _35CB_AudioPlaybackAgent
         /// <returns>an instance of AudioTrack, or null if the playback is completed</returns>
         private AudioTrack GetNextTrack()
         {
-            // TODO: add logic to get the next audio track
-
-            AudioTrack track = null;
-
-            // specify the track
-
-            return track;
+            return (++currentTrackNumber < _playlist.Count) ? _playlist[currentTrackNumber] : null;
         }
 
 
@@ -217,13 +213,7 @@ namespace _35CB_AudioPlaybackAgent
         /// <returns>an instance of AudioTrack, or null if previous track is not allowed</returns>
         private AudioTrack GetPreviousTrack()
         {
-            // TODO: add logic to get the previous audio track
-
-            AudioTrack track = null;
-
-            // specify the track
-
-            return track;
+            return (--currentTrackNumber >= 0) ? _playlist[currentTrackNumber] : null;
         }
 
         /// <summary>

@@ -43,14 +43,14 @@ namespace _35ConfessionBuddhas
                 string imageName = String.Empty;
 
                 // Figure out image based on track number
-                if (track >= 1 && track <= 3)
+                if (track >= 1 && track <= 4)
                     imageName = "Buddha Shakyamuni";
-                else if (track >= 4 && track <= 39)
+                else if (track >= 5 && track <= 38)
                     imageName = (track - 3).ToString() + "-35CB";
-                else if (track >= 40 && track <= 41)
+                else if (track >= 39 && track <= 41)
                     imageName = "Buddha Shakyamuni";
                 else if (track >= 42 && track <= 43)
-                    imageName = "Je Tsongkhapa";
+                    imageName = "Buddha Shakyamuni"; // TODO: get Je Tsongkhapa image
 
                 // Set image
                 imgDeity.Source = new BitmapImage(new Uri("/Images/" + imageName + ".png", UriKind.Relative));
