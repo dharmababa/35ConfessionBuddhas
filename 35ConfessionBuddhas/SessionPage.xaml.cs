@@ -27,6 +27,16 @@ namespace _35ConfessionBuddhas
             //imgDeity.Source = new BitmapImage(new Uri("/images/Buddha Shakyamuni.png", UriKind.Relative));
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (null != BackgroundAudioPlayer.Instance.Track)
+            {
+                SetImageForTrack(BackgroundAudioPlayer.Instance.Track.Tag);
+            }
+
+            base.OnNavigatedTo(e);
+        }
+        
         private void Instance_PlayStateChanged(object sender, EventArgs e)
         {
             if (null != BackgroundAudioPlayer.Instance.Track)

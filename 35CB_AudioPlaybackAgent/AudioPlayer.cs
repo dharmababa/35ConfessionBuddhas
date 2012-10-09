@@ -170,6 +170,7 @@ namespace _35CB_AudioPlaybackAgent
                     if (previousTrack != null)
                     {
                         player.Track = previousTrack;
+                        player.Play();
                     }
                     break;
             }
