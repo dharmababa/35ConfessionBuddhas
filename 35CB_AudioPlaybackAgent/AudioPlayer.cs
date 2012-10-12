@@ -87,11 +87,11 @@ namespace _35CB_AudioPlaybackAgent
         /// </remarks>
         protected override void OnPlayStateChanged(BackgroundAudioPlayer player, AudioTrack track, PlayState playState)
         {
+            System.Diagnostics.Debug.WriteLine("AGENT PLAY STATE: " + playState.ToString());
             switch (playState)
             {
                 case PlayState.TrackEnded:
                     player.Track = GetNextTrack();
-                    player.Play();
                     break;
                 case PlayState.TrackReady:
                     player.Play();
@@ -138,13 +138,11 @@ namespace _35CB_AudioPlaybackAgent
         /// </remarks>
         protected override void OnUserAction(BackgroundAudioPlayer player, AudioTrack track, UserAction action, object param)
         {
+            System.Diagnostics.Debug.WriteLine("AGENT USER ACTION: " + action.ToString());
             switch (action)
             {
-                case UserAction.Play:
-                    if (player.PlayerState != PlayState.Playing)
-                    {
-                        PlayTrack(player);
-                    }
+                case UserAction.Play:                    
+                    PlayTrack(player);                        
                     break;
                 case UserAction.Stop:
                     player.Stop();
@@ -163,14 +161,12 @@ namespace _35CB_AudioPlaybackAgent
                     break;
                 case UserAction.SkipNext:
                     player.Track = GetNextTrack();
-                    player.Play();
                     break;
                 case UserAction.SkipPrevious:
                     AudioTrack previousTrack = GetPreviousTrack();
                     if (previousTrack != null)
                     {
                         player.Track = previousTrack;
-                        player.Play();
                     }
                     break;
             }
@@ -182,7 +178,6 @@ namespace _35CB_AudioPlaybackAgent
             // Sets the track to play. When the TrackReady state is received, 
             // playback begins from the OnPlayStateChanged handler.
             player.Track = _playlist[currentTrackNumber];
-            player.Play();
         }
 
         /// <summary>

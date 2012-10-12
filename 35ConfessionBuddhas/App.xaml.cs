@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Resources;
 using System.Windows.Shapes;
+using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
@@ -42,6 +43,10 @@ namespace _35ConfessionBuddhas
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
             {
+                // Close the background audio player in case it 
+                // was running from a previous debugging session.
+                BackgroundAudioPlayer.Instance.Close();
+
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
 
@@ -143,7 +148,8 @@ namespace _35ConfessionBuddhas
                     }
                 }
             }
-        }
+            System.Diagnostics.Debug.WriteLine("Finished copying files to isolated storage");
+        } // End of CopyToIsolatedStorage()
 
         #region Phone application initialization
 
