@@ -13,7 +13,32 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="False">
-
+	<phone:PhoneApplicationPage.Resources>
+		<Storyboard x:Name="sbNextDeity">
+			<DoubleAnimation x:Name="animCurrLeft" Duration="0:0:0.5" To="-480" Storyboard.TargetProperty="(Canvas.Left)" d:IsOptimized="True">
+				<DoubleAnimation.EasingFunction>
+					<CubicEase EasingMode="EaseOut"/>
+				</DoubleAnimation.EasingFunction>
+			</DoubleAnimation>
+			<DoubleAnimation x:Name="animNextLeft" Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(Canvas.Left)" d:IsOptimized="True">
+				<DoubleAnimation.EasingFunction>
+					<CubicEase EasingMode="EaseOut"/>
+				</DoubleAnimation.EasingFunction>
+			</DoubleAnimation>
+		</Storyboard>
+        <Storyboard x:Name="sbPrevDeity">
+            <DoubleAnimation x:Name="animCurrRight" Duration="0:0:0.5" To="480" Storyboard.TargetProperty="(Canvas.Left)" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation x:Name="animPrevRight" Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(Canvas.Left)" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -37,7 +62,11 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Image x:Name="imgDeity" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="Auto" Stretch="UniformToFill"/>
+        <Canvas HorizontalAlignment="Left" Height="800" Margin="0,0,0,0" VerticalAlignment="Top" Width="480">
+            <Image x:Name="imgDeity2" HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="480" Margin="0,0,0,0" Stretch="UniformToFill" Canvas.Left="0" />
+            <Image x:Name="imgDeity1" HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="480" Margin="0,0,0,0" Stretch="UniformToFill" Canvas.Left="-480" />
+            <Image x:Name="imgDeity3" HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="480" Margin="0,0,0,0" Stretch="UniformToFill" Canvas.Left="480" />
+        </Canvas>
     </Grid>
 
 </phone:PhoneApplicationPage>

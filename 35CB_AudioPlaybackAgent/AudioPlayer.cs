@@ -18,9 +18,9 @@ namespace _35CB_AudioPlaybackAgent
         private static List<AudioTrack> _playlist = new List<AudioTrack>
         {
             new AudioTrack(new Uri("Liberating Prayer.mp3", UriKind.Relative), "Liberating Prayer", ARTIST, ALBUM, null, 
-                "1", EnabledPlayerControls.All),
-            new AudioTrack(new Uri("Homage.mp3", UriKind.Relative), "Homage", ARTIST, ALBUM, null, "2", EnabledPlayerControls.All),
-            new AudioTrack(new Uri("Refuge.mp3", UriKind.Relative), "Refuge", ARTIST, ALBUM, null, "3", EnabledPlayerControls.All)
+                "0", EnabledPlayerControls.All),
+            new AudioTrack(new Uri("Homage.mp3", UriKind.Relative), "Homage", ARTIST, ALBUM, null, "1", EnabledPlayerControls.All),
+            new AudioTrack(new Uri("Refuge.mp3", UriKind.Relative), "Refuge", ARTIST, ALBUM, null, "2", EnabledPlayerControls.All)
         };
 
         /// <remarks>
@@ -40,22 +40,22 @@ namespace _35CB_AudioPlaybackAgent
                 });
 
                 // Add prostration tracks
-                for (int i = 1; i <= 35; i++) {
-                    _playlist.Add(new AudioTrack(new Uri("Prostration-" + i.ToString() + ".mp3", UriKind.Relative), "Prostration", 
+                for (int i = 0; i < 35; i++) {
+                    _playlist.Add(new AudioTrack(new Uri("Prostration-" + (i+1).ToString() + ".mp3", UriKind.Relative), "Prostration", 
                         ARTIST, ALBUM, null, (i+3).ToString(), EnabledPlayerControls.All));
                 }
 
                 // Add final tracks
                 _playlist.Add(new AudioTrack(new Uri("Confession.mp3", UriKind.Relative), "Confession", ARTIST, ALBUM, 
-                    null, "39", EnabledPlayerControls.All));
+                    null, "38", EnabledPlayerControls.All));
                 _playlist.Add(new AudioTrack(new Uri("Dedication.mp3", UriKind.Relative), "Dedication", ARTIST, ALBUM,
-                    null, "40", EnabledPlayerControls.All));
+                    null, "39", EnabledPlayerControls.All));
                 _playlist.Add(new AudioTrack(new Uri("Conclusion.mp3", UriKind.Relative), "Conclusion", ARTIST, ALBUM,
-                    null, "41", EnabledPlayerControls.All));
+                    null, "40", EnabledPlayerControls.All));
                 _playlist.Add(new AudioTrack(new Uri("Prayers for the Virtuous Tradition.mp3", UriKind.Relative), "Prayers for the Virtuous Tradition", 
-                    ARTIST, ALBUM, null, "42", EnabledPlayerControls.All));
+                    ARTIST, ALBUM, null, "41", EnabledPlayerControls.All));
                 _playlist.Add(new AudioTrack(new Uri("Nine-line Migtsema Prayer.mp3", UriKind.Relative), "Nine-line Migtsema Prayer", ARTIST, ALBUM,
-                    null, "43", EnabledPlayerControls.All));
+                    null, "42", EnabledPlayerControls.All));
             }
         }
 
@@ -87,7 +87,7 @@ namespace _35CB_AudioPlaybackAgent
         /// </remarks>
         protected override void OnPlayStateChanged(BackgroundAudioPlayer player, AudioTrack track, PlayState playState)
         {
-            System.Diagnostics.Debug.WriteLine("AGENT PLAY STATE: " + playState.ToString());
+            System.Diagnostics.Debug.WriteLine("AGENT PLAY STATE CHANGED: " + playState.ToString());
             switch (playState)
             {
                 case PlayState.TrackEnded:
@@ -138,7 +138,7 @@ namespace _35CB_AudioPlaybackAgent
         /// </remarks>
         protected override void OnUserAction(BackgroundAudioPlayer player, AudioTrack track, UserAction action, object param)
         {
-            System.Diagnostics.Debug.WriteLine("AGENT USER ACTION: " + action.ToString());
+            System.Diagnostics.Debug.WriteLine("AGENT RECEIVED USER ACTION: " + action.ToString());
             switch (action)
             {
                 case UserAction.Play:                    
