@@ -6,7 +6,7 @@
       <Capability Name="ID_CAP_MEDIALIB" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <DefaultTask Name="_default" NavigationPage="MainPano.xaml" />
       <ExtendedTask Name="BackgroundTask">
         <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="35CB_AudioPlaybackAgent" Source="35CB_AudioPlaybackAgent" Type="_35CB_AudioPlaybackAgent.AudioPlayer" />
       </ExtendedTask>
