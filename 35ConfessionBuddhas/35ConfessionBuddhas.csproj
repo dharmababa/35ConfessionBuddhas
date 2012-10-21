@@ -70,6 +70,7 @@
     <Compile Include="SessionPage.xaml.cs">
       <DependentUpon>SessionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TiltEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
