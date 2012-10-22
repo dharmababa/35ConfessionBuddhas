@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.IO.IsolatedStorage;
 using Microsoft.Phone.BackgroundAudio;
 
 namespace _35CB_AudioPlaybackAgent
 {
     public class AudioPlayer : AudioPlayerAgent
     {
+        public const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
+
         private static volatile bool _classInitialized;
 
         private const string ARTIST = "New Kadampa Tradition";
@@ -97,7 +100,8 @@ namespace _35CB_AudioPlaybackAgent
                     player.Play();
                     break;
                 case PlayState.Shutdown:
-                    // TODO: Handle the shutdown state here (e.g. save state)
+                    IsolatedStorageSettings.ApplicationSettings.Add(LAST_TRACK_NUMBER_KEYNAME, Convert.ToInt16(player.Track.Tag));
+                    IsolatedStorageSettings.ApplicationSettings.Save();
                     break;
                 case PlayState.Unknown:
                     break;

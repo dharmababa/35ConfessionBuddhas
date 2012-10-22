@@ -26,6 +26,8 @@ namespace _35ConfessionBuddhas
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
 
+        public const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
+
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -69,10 +71,16 @@ namespace _35ConfessionBuddhas
 
         }
 
+        public static bool IsResumeAvailable = false;
+        
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            short lastTrack =  0;
+            IsolatedStorageSettings.ApplicationSettings.TryGetValue<short>(LAST_TRACK_NUMBER_KEYNAME, out lastTrack);
+
+            IsResumeAvailable = (lastTrack != 0);
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -91,7 +99,7 @@ namespace _35ConfessionBuddhas
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            BackgroundAudioPlayer.Instance.Close();
+            //BackgroundAudioPlayer.Instance.Close();
         }
 
         // Code to execute if a navigation fails

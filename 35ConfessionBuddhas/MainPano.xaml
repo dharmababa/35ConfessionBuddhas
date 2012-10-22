@@ -8,6 +8,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -22,30 +23,41 @@
                 <ImageBrush ImageSource="PanoBackground.png" />
             </controls:Panorama.Background>   
 
-            <!--Panorama item 1-->
-            <controls:PanoramaItem Header="start">
+            <!--Start Panorama item-->
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderStart, Source={StaticResource LocalizedStrings}}">
                 <ListBox Margin="12">
-                    <ListBoxItem x:Name="lbiNewSession" Tap="lbiNewSession_Tap" local:TiltEffect.IsTiltEnabled="True">
+                    <ListBoxItem x:Name="lbiNewSession" Tap="lbiNewSession_Tap" local:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Icons/PlayButton.png" />
-                            <TextBlock Text="new session" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="15,0,0,10" Foreground="White" />
+                            <TextBlock Text="{Binding Path=LocalizedResources.MainPanoStartNewSession, Source={StaticResource LocalizedStrings}}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="15,0,0,10" Foreground="White" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem x:Name="lbiResumeSession" Tap="lbiResumeSession_Tap" local:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="imgResumeSession" Source="Icons/PlayButton.png" OpacityMask="{StaticResource PhoneDisabledBrush}" />
+                            <TextBlock x:Name="tbResumeSession" Text="{Binding Path=LocalizedResources.MainPanoStartResumeSession, Source={StaticResource LocalizedStrings}}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="15,0,0,10" Foreground="{StaticResource PhoneDisabledBrush}" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>
             </controls:PanoramaItem>
 
             <!--Panorama item 2-->
-            <controls:PanoramaItem Header="stats">
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderStats, Source={StaticResource LocalizedStrings}}">
                 <Grid/>
             </controls:PanoramaItem>
 
-            <!--Panorama item 3-->
-            <controls:PanoramaItem Header="settings">
-                <Grid/>
+            <!--Settings Panorama item-->
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderSettings, Source={StaticResource LocalizedStrings}}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                    <toolkit:ToggleSwitch x:Name="tglBackgroundPlayback" Header="{Binding Path=LocalizedResources.MainPanoSettingsBackgroundPlayback, Source={StaticResource LocalizedStrings}}" IsChecked="True" SwitchForeground="{StaticResource PhoneAccentBrush}" Background="{StaticResource PhoneBackgroundBrush}" />
+                    <CheckBox x:Name="chkConfirmNew" IsChecked="True" local:TiltEffect.IsTiltEnabled="True">
+                        <TextBlock Text="{Binding Path=LocalizedResources.MainPanoSettingsWarnNew, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="0,20,0,0"></TextBlock>
+                    </CheckBox>
+                </StackPanel>
             </controls:PanoramaItem>
 
             <!--Panorama item 4-->
-            <controls:PanoramaItem Header="about">
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderAbout, Source={StaticResource LocalizedStrings}}">
                 <Grid/>
             </controls:PanoramaItem>
         </controls:Panorama>
