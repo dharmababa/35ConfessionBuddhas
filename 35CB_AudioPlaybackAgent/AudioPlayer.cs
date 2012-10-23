@@ -9,6 +9,7 @@ namespace _35CB_AudioPlaybackAgent
     public class AudioPlayer : AudioPlayerAgent
     {
         public const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
+        private const string LAST_TRACK_TIME_KEYNAME = "LastTrackTime";
 
         private static volatile bool _classInitialized;
 
@@ -100,8 +101,7 @@ namespace _35CB_AudioPlaybackAgent
                     player.Play();
                     break;
                 case PlayState.Shutdown:
-                    IsolatedStorageSettings.ApplicationSettings.Add(LAST_TRACK_NUMBER_KEYNAME, Convert.ToInt16(player.Track.Tag));
-                    IsolatedStorageSettings.ApplicationSettings.Save();
+                    SaveTrackAndTime(player, track);
                     break;
                 case PlayState.Unknown:
                     break;
@@ -124,6 +124,19 @@ namespace _35CB_AudioPlaybackAgent
             NotifyComplete();
         }
 
+        /// <summary>
+        /// Saves the current track and position to isolated storage so that playback can be resumed later.
+        /// </summary>
+        /// <param name="player">The current background audio player instance.</param>
+        /// <param name="track">The current track.</param>
+        private void SaveTrackAndTime(BackgroundAudioPlayer player, AudioTrack track)
+        {
+            _35CB_SharedHelpers.AppSettings settings = new _35CB_SharedHelpers.AppSettings();
+
+            settings.LastTrackNumber = Convert.ToInt16(track.Tag);
+            settings.LastTrackTime = player.Position.TotalSeconds;
+            
+        }        
 
         /// <summary>
         /// Called when the user requests an action using application/system provided UI
@@ -250,6 +263,6 @@ namespace _35CB_AudioPlaybackAgent
         protected override void OnCancel()
         {
 
-        }        
+        }
     }
 }

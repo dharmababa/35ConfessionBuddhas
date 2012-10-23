@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "35ConfessionBuddhas", "35Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "35CB_AudioPlaybackAgent", "35CB_AudioPlaybackAgent\35CB_AudioPlaybackAgent.csproj", "{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "35CB_SharedHelpers", "35CB_SharedHelpers\35CB_SharedHelpers.csproj", "{977CA1C5-0A03-4A22-9670-434107548CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977CA1C5-0A03-4A22-9670-434107548CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977CA1C5-0A03-4A22-9670-434107548CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977CA1C5-0A03-4A22-9670-434107548CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977CA1C5-0A03-4A22-9670-434107548CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

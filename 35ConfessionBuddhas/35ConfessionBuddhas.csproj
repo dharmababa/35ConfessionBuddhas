@@ -68,7 +68,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="AppSettings.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPano.xaml.cs">
       <DependentUpon>MainPano.xaml</DependentUpon>
@@ -274,6 +273,10 @@
     <ProjectReference Include="..\35CB_AudioPlaybackAgent\35CB_AudioPlaybackAgent.csproj">
       <Project>{357F6E8C-73C5-474C-B4AF-4FB4FD407C98}</Project>
       <Name>35CB_AudioPlaybackAgent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\35CB_SharedHelpers\35CB_SharedHelpers.csproj">
+      <Project>{977CA1C5-0A03-4A22-9670-434107548CCD}</Project>
+      <Name>35CB_SharedHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

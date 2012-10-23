@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Text;
 
-namespace _35ConfessionBuddhas
+namespace _35CB_SharedHelpers
 {
     public class AppSettings
     {
@@ -143,5 +143,6 @@ namespace _35ConfessionBuddhas
             {
                 if (AddOrUpdateValue(BG_PLAYBACK_ENABLED_KEYNAME, value)) Save();
             }
+        }
     }
 }
