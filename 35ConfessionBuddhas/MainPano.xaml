@@ -16,6 +16,10 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
 
+    <phone:PhoneApplicationPage.Resources>
+        <local:AppSettings x:Key="appSettings"></local:AppSettings>
+    </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         <controls:Panorama Title="35 Confession Buddhas">
@@ -41,7 +45,7 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <!--Panorama item 2-->
+            <!--Stats Panorama item-->
             <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderStats, Source={StaticResource LocalizedStrings}}">
                 <Grid/>
             </controls:PanoramaItem>
@@ -49,14 +53,14 @@
             <!--Settings Panorama item-->
             <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderSettings, Source={StaticResource LocalizedStrings}}">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                    <toolkit:ToggleSwitch x:Name="tglBackgroundPlayback" Header="{Binding Path=LocalizedResources.MainPanoSettingsBackgroundPlayback, Source={StaticResource LocalizedStrings}}" IsChecked="True" SwitchForeground="{StaticResource PhoneAccentBrush}" Background="{StaticResource PhoneBackgroundBrush}" />
-                    <CheckBox x:Name="chkConfirmNew" IsChecked="True" local:TiltEffect.IsTiltEnabled="True">
+                    <toolkit:ToggleSwitch x:Name="tglBackgroundPlayback" Header="{Binding Path=LocalizedResources.MainPanoSettingsBackgroundPlayback, Source={StaticResource LocalizedStrings}}" IsChecked="{Binding Source={StaticResource appSettings}, Path=BackgroundPlaybackEnabled, Mode=TwoWay}" SwitchForeground="{StaticResource PhoneAccentBrush}" Background="{StaticResource PhoneBackgroundBrush}" />
+                    <CheckBox x:Name="chkConfirmNew" IsChecked="{Binding Source={StaticResource appSettings}, Path=WarnOnNew, Mode=TwoWay}" local:TiltEffect.IsTiltEnabled="True">
                         <TextBlock Text="{Binding Path=LocalizedResources.MainPanoSettingsWarnNew, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="0,20,0,0"></TextBlock>
                     </CheckBox>
                 </StackPanel>
             </controls:PanoramaItem>
 
-            <!--Panorama item 4-->
+            <!--About Panorama item-->
             <controls:PanoramaItem Header="{Binding Path=LocalizedResources.MainPanoHeaderAbout, Source={StaticResource LocalizedStrings}}">
                 <Grid/>
             </controls:PanoramaItem>

@@ -68,6 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPano.xaml.cs">
       <DependentUpon>MainPano.xaml</DependentUpon>

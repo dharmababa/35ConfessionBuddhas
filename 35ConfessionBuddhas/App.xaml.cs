@@ -26,8 +26,6 @@ namespace _35ConfessionBuddhas
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
 
-        public const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
-
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -77,10 +75,9 @@ namespace _35ConfessionBuddhas
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            short lastTrack =  0;
-            IsolatedStorageSettings.ApplicationSettings.TryGetValue<short>(LAST_TRACK_NUMBER_KEYNAME, out lastTrack);
+            AppSettings settings = new AppSettings();
 
-            IsResumeAvailable = (lastTrack != 0);
+            IsResumeAvailable = (settings.LastTrackNumber != 0);
         }
 
         // Code to execute when the application is activated (brought to foreground)
