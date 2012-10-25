@@ -26,22 +26,39 @@ namespace _35ConfessionBuddhas
             InitializeComponent();
 
             // Add the handler for changes from background audio player.
-            BackgroundAudioPlayer.Instance.PlayStateChanged += new EventHandler(Instance_PlayStateChanged);
-
-            // Set up the initial image and next.
-            SetImageForTrack(0, imgDeity2);
-            SetImageForTrack(1, imgDeity3);
-
-            // Start the audio
-            BackgroundAudioPlayer.Instance.Play();
+            BackgroundAudioPlayer.Instance.PlayStateChanged += new EventHandler(Instance_PlayStateChanged);            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (null != BackgroundAudioPlayer.Instance.Track)
+            SetImageControlPositions();
+
+            // If it is a new session, reset the images to the beginning.
+            if ((NavigationContext.QueryString.ContainsKey("SessionType")) && (NavigationContext.QueryString["SessionType"] == "New"))
             {
-                // SetImageForTrack(Convert.ToInt16(BackgroundAudioPlayer.Instance.Track.Tag));
+                // Set up the initial image and next.
+                SetImageForTrack(0, _currDeity);
+                SetImageForTrack(1, _nextDeity);
             }
+            // Else we are resuming a session, so need to update the images according to current track.
+            else
+            {
+                int currTrack = Convert.ToInt32(BackgroundAudioPlayer.Instance.Track.Tag);
+
+                SetImageForTrack(currTrack, _currDeity);
+
+                // Only set the left off-screen placeholder if we are not at the first track.
+                if (currTrack != 0)
+                    SetImageForTrack(currTrack - 1, _prevDeity);
+
+                // Only set the right off-screen placeholder if we are not at the last track.
+                if (currTrack != 42)
+                    SetImageForTrack(currTrack + 1, _nextDeity);
+            }
+
+            // Start the audio if needed
+            if (BackgroundAudioPlayer.Instance.PlayerState != PlayState.Playing)
+                BackgroundAudioPlayer.Instance.Play();
 
             base.OnNavigatedTo(e);
         }
@@ -54,12 +71,12 @@ namespace _35ConfessionBuddhas
                 switch (BackgroundAudioPlayer.Instance.PlayerState)
                 {
                     case PlayState.Playing:                        
-                        int currTrack = Convert.ToInt16(BackgroundAudioPlayer.Instance.Track.Tag);
+                        short currTrack = Convert.ToInt16(BackgroundAudioPlayer.Instance.Track.Tag);
 
                         if (currTrack > _latestTrack) // Current track is newer so play the forward animation
                         {
                             // Re-set prev/curr/next pointers to figure out which image controls to move
-                            SetImagePositions();
+                            SetImageControlPositions();
 
                             // Stop storyboard if it is running
                             sbNextDeity.Stop();
@@ -78,7 +95,7 @@ namespace _35ConfessionBuddhas
                         }
                         else if (currTrack < _latestTrack) // Current track is older so play backwards animation
                         {
-                            SetImagePositions();
+                            SetImageControlPositions();
                             sbPrevDeity.Stop();
 
                             Storyboard.SetTarget(animCurrRight, _currDeity);
@@ -98,7 +115,7 @@ namespace _35ConfessionBuddhas
         /// Looks at the current positions of all the image controls and determines which is in the previous,
         /// current and next slots based on their canvas position.
         /// </summary>
-        private void SetImagePositions()
+        private void SetImageControlPositions()
         {
             double[] arrLeftPos = new double[3] { 
                 Convert.ToDouble(imgDeity1.GetValue(Canvas.LeftProperty)),

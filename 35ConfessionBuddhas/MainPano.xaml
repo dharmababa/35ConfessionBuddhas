@@ -15,7 +15,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="False" Loaded="PhoneApplicationPage_Loaded">
+    shell:SystemTray.IsVisible="False">
 
     <phone:PhoneApplicationPage.Resources>
         <helper:AppSettings x:Key="appSettings" />
@@ -37,7 +37,7 @@
                             <TextBlock Text="{Binding Path=LocalizedResources.MainPanoStartNewSession, Source={StaticResource LocalizedStrings}}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="15,0,0,10" Foreground="White" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem x:Name="lbiResumeSession" Tap="lbiResumeSession_Tap" local:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,15">
+                    <ListBoxItem x:Name="lbiResumeSession" Tap="lbiResumeSession_Tap" local:TiltEffect.IsTiltEnabled="False" Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal">
                             <Image x:Name="imgResumeSession" Source="Icons/PlayButton.png" OpacityMask="{StaticResource PhoneDisabledBrush}" />
                             <TextBlock x:Name="tbResumeSession" Text="{Binding Path=LocalizedResources.MainPanoStartResumeSession, Source={StaticResource LocalizedStrings}}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="15,0,0,10" Foreground="{StaticResource PhoneDisabledBrush}" />

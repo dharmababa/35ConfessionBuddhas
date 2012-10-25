@@ -131,5 +131,23 @@ namespace _35ConfessionBuddhas {
                 return ResourceManager.GetString("MainPanoStartResumeSession", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A session is in progress. Are you sure you want to start a new session?.
+        /// </summary>
+        public static string WarnOnNewText {
+            get {
+                return ResourceManager.GetString("WarnOnNewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm new session.
+        /// </summary>
+        public static string WarnOnNewTitle {
+            get {
+                return ResourceManager.GetString("WarnOnNewTitle", resourceCulture);
+            }
+        }
     }
 }

@@ -141,4 +141,10 @@
   <data name="MainPanoStartResumeSession" xml:space="preserve">
     <value>resume session</value>
   </data>
+  <data name="WarnOnNewText" xml:space="preserve">
+    <value>A session is in progress. Are you sure you want to start a new session?</value>
+  </data>
+  <data name="WarnOnNewTitle" xml:space="preserve">
+    <value>Confirm new session</value>
+  </data>
 </root>

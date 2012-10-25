@@ -8,15 +8,13 @@ namespace _35CB_AudioPlaybackAgent
 {
     public class AudioPlayer : AudioPlayerAgent
     {
-        public const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
-        private const string LAST_TRACK_TIME_KEYNAME = "LastTrackTime";
-
         private static volatile bool _classInitialized;
 
         private const string ARTIST = "New Kadampa Tradition";
         private const string ALBUM = "The Bodhisattva's Confessions of Moral Downfalls";
 
         static int currentTrackNumber = 0;
+        private _35CB_SharedHelpers.AppSettings settings = new _35CB_SharedHelpers.AppSettings();
         
         // Initialize playlist - remaining tracks are added in the constructor.
         private static List<AudioTrack> _playlist = new List<AudioTrack>
@@ -105,7 +103,7 @@ namespace _35CB_AudioPlaybackAgent
                     break;
                 case PlayState.Unknown:
                     break;
-                case PlayState.Stopped:
+                case PlayState.Stopped:                    
                     break;
                 case PlayState.Paused:
                     break;
@@ -131,11 +129,8 @@ namespace _35CB_AudioPlaybackAgent
         /// <param name="track">The current track.</param>
         private void SaveTrackAndTime(BackgroundAudioPlayer player, AudioTrack track)
         {
-            _35CB_SharedHelpers.AppSettings settings = new _35CB_SharedHelpers.AppSettings();
-
-            settings.LastTrackNumber = Convert.ToInt16(track.Tag);
-            settings.LastTrackTime = player.Position.TotalSeconds;
-            
+            settings.LastTrackNumber = Convert.ToInt32(track.Tag);
+            settings.LastTrackTime = player.Position.TotalSeconds;   
         }        
 
         /// <summary>
@@ -192,9 +187,15 @@ namespace _35CB_AudioPlaybackAgent
         }
 
         private void PlayTrack(BackgroundAudioPlayer player) {
-            // Sets the track to play. When the TrackReady state is received, 
-            // playback begins from the OnPlayStateChanged handler.
-            player.Track = _playlist[currentTrackNumber];
+            if (settings.IsNewSession)
+            {
+                player.Track = _playlist[0];
+                settings.IsNewSession = false;
+            }
+            else
+                // Sets the track to play. When the TrackReady state is received, 
+                // playback begins from the OnPlayStateChanged handler.
+                player.Track = _playlist[currentTrackNumber];
         }
 
         /// <summary>

@@ -20,33 +20,51 @@ namespace _35ConfessionBuddhas
 
         public MainPano()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void lbiNewSession_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            // If resume is available, prompt the user to make sure.
+            if ((settings.WarnOnNew) && (App.IsResumeAvailable))
+            {
+                // If resume is available, prompt the user to make sure.
+                MessageBoxResult result = MessageBox.Show(AppResources.WarnOnNewText, AppResources.WarnOnNewTitle, MessageBoxButton.OKCancel);
 
-            this.NavigationService.Navigate(new Uri("/SessionPage.xaml", UriKind.Relative));
+                // If user says ok, stop the BAP and set flag indicating that new session has been started.
+                if (result == MessageBoxResult.OK)
+                {
+                    BackgroundAudioPlayer.Instance.Stop();
+                    settings.IsNewSession = true;
+                }
+                else // Don't want to navigate so return if the user cancelled the prompt.
+                    return;
+            }
+
+            this.NavigationService.Navigate(new Uri("/SessionPage.xaml?SessionType=New", UriKind.Relative));
         }
 
         private void lbiResumeSession_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/SessionPage.xaml", UriKind.Relative));
+            if (App.IsResumeAvailable)
+                this.NavigationService.Navigate(new Uri("/SessionPage.xaml", UriKind.Relative));
         }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            App.IsResumeAvailable = (settings.LastTrackNumber != 0);
+            // Enable resume if there is either a saved session from before or a current instance of the player.
+            App.IsResumeAvailable = (settings.LastTrackNumber != 0) ||
+                (BackgroundAudioPlayer.Instance.PlayerState == PlayState.Playing) ||
+                (BackgroundAudioPlayer.Instance.PlayerState == PlayState.Paused);
 
-            if ((!App.IsResumeAvailable) && (BackgroundAudioPlayer.Instance.PlayerState == PlayState.Playing))
-                App.IsResumeAvailable = true;
-
+            // Enable the resume UI if needed.
             if (App.IsResumeAvailable)
             {
                 tbResumeSession.Foreground = (Brush)Application.Current.Resources["PhoneForegroundBrush"];
                 imgResumeSession.OpacityMask = (Brush)Application.Current.Resources["PhoneForegroundBrush"];
+                lbiResumeSession.SetValue(TiltEffect.IsTiltEnabledProperty, true);
             }
+
+            base.OnNavigatedTo(e);
         }
     }
 }

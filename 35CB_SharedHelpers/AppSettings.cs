@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Text;
+using System.Threading;
 
 namespace _35CB_SharedHelpers
 {
@@ -9,17 +10,22 @@ namespace _35CB_SharedHelpers
     {
         IsolatedStorageSettings settings;
 
+        // Shared mutex name for accessing settings
+        public const string STORAGE_MUTEX = "35CB_Storage_Mutex";
+
         // Key names for settings
         private const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
         private const string LAST_TRACK_TIME_KEYNAME = "LastTrackTime";
         private const string WARN_ON_NEW_KEYNAME = "WarnOnNewSession";
         private const string BG_PLAYBACK_ENABLED_KEYNAME = "BackgroundPlaybackEnabled";
+        private const string IS_NEW_SESSION_KEYNAME = "IsNewSession";
 
         // Default values for settings
-        private const short LAST_TRACK_NUMBER_DEFAULT = 0;
+        private const int LAST_TRACK_NUMBER_DEFAULT = 0;
         private const double LAST_TRACK_TIME_DEFAULT = 0;
         private const bool WARN_ON_NEW_DEFAULT = true;
         private const bool BG_PLAYBACK_ENABLED_DEFAULT = true;
+        private const bool IS_NEW_SESSION_DEFAULT = false;
 
         /// <summary>
         /// Constructor that gets the application settings.
@@ -44,24 +50,46 @@ namespace _35CB_SharedHelpers
         {
             bool valueChanged = false;
 
-            // If the key exists
-            if (settings.Contains(Key))
+            Mutex mutex = new Mutex(false, _35CB_SharedHelpers.AppSettings.STORAGE_MUTEX);
+            try
             {
-                // If the value has changed
-                if (settings[Key] != value)
+                mutex.WaitOne();
+
+                // If the key exists
+                if (settings.Contains(Key))
                 {
-                    // Store the new value
-                    settings[Key] = value;
+                    // If the value has changed
+                    if (settings[Key] != value)
+                    {
+                        // Store the new value
+                        settings[Key] = value;
+                        valueChanged = true;
+                    }
+                }
+                // Otherwise create the key.
+                else
+                {
+                    settings.Add(Key, value);
                     valueChanged = true;
                 }
+                return valueChanged;
             }
-            // Otherwise create the key.
-            else
+            catch (Exception)
             {
-                settings.Add(Key, value);
-                valueChanged = true;
+                // error handling, if applicable
+                return false;
             }
-            return valueChanged;
+            finally
+            {
+                try
+                {
+                    mutex.ReleaseMutex();
+                }
+                catch (Exception)
+                {
+                }
+                mutex.Dispose();
+            }            
         }
 
         /// <summary>
@@ -76,17 +104,39 @@ namespace _35CB_SharedHelpers
         {
             T value;
 
-            // If the key exists, retrieve the value.
-            if (settings.Contains(Key))
+            Mutex mutex = new Mutex(false, _35CB_SharedHelpers.AppSettings.STORAGE_MUTEX);
+            try
             {
-                value = (T)settings[Key];
+                mutex.WaitOne();
+
+                // If the key exists, retrieve the value.
+                if (settings.Contains(Key))
+                {
+                    value = (T)settings[Key];
+                }
+                // Otherwise, use the default value.
+                else
+                {
+                    value = defaultValue;
+                }
+                return value;
             }
-            // Otherwise, use the default value.
-            else
+            catch (Exception)
             {
-                value = defaultValue;
+                // error handling, if applicable
+                return default(T);
             }
-            return value;
+            finally
+            {
+                try
+                {
+                    mutex.ReleaseMutex();
+                }
+                catch (Exception)
+                {
+                }
+                mutex.Dispose();
+            }            
         }
 
         /// <summary>
@@ -97,7 +147,7 @@ namespace _35CB_SharedHelpers
             settings.Save();
         }
 
-        public short LastTrackNumber
+        public int LastTrackNumber
         {
             get
             {
@@ -142,6 +192,18 @@ namespace _35CB_SharedHelpers
             set
             {
                 if (AddOrUpdateValue(BG_PLAYBACK_ENABLED_KEYNAME, value)) Save();
+            }
+        }
+
+        public bool IsNewSession
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(IS_NEW_SESSION_KEYNAME, IS_NEW_SESSION_DEFAULT);
+            }
+            set
+            {
+                if (AddOrUpdateValue(IS_NEW_SESSION_KEYNAME, value)) Save();
             }
         }
     }
