@@ -52,7 +52,7 @@ namespace _35ConfessionBuddhas
                     SetImageForTrack(currTrack - 1, _prevDeity);
 
                 // Only set the right off-screen placeholder if we are not at the last track.
-                if (currTrack != 42)
+                if (currTrack != _35CB_SharedHelpers.AppConstants.LAST_TRACK_INDEX)
                     SetImageForTrack(currTrack + 1, _nextDeity);
             }
 
@@ -71,7 +71,7 @@ namespace _35ConfessionBuddhas
                 switch (BackgroundAudioPlayer.Instance.PlayerState)
                 {
                     case PlayState.Playing:                        
-                        short currTrack = Convert.ToInt16(BackgroundAudioPlayer.Instance.Track.Tag);
+                        int currTrack = Convert.ToInt32(BackgroundAudioPlayer.Instance.Track.Tag);
 
                         if (currTrack > _latestTrack) // Current track is newer so play the forward animation
                         {

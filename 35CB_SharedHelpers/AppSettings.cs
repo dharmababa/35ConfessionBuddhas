@@ -11,21 +11,19 @@ namespace _35CB_SharedHelpers
         IsolatedStorageSettings settings;
 
         // Shared mutex name for accessing settings
-        public const string STORAGE_MUTEX = "35CB_Storage_Mutex";
+        private const string STORAGE_MUTEX = "35CB_Storage_Mutex";
 
         // Key names for settings
         private const string LAST_TRACK_NUMBER_KEYNAME = "LastTrackNumber";
         private const string LAST_TRACK_TIME_KEYNAME = "LastTrackTime";
         private const string WARN_ON_NEW_KEYNAME = "WarnOnNewSession";
         private const string BG_PLAYBACK_ENABLED_KEYNAME = "BackgroundPlaybackEnabled";
-        private const string IS_NEW_SESSION_KEYNAME = "IsNewSession";
 
         // Default values for settings
         private const int LAST_TRACK_NUMBER_DEFAULT = 0;
         private const double LAST_TRACK_TIME_DEFAULT = 0;
         private const bool WARN_ON_NEW_DEFAULT = true;
         private const bool BG_PLAYBACK_ENABLED_DEFAULT = true;
-        private const bool IS_NEW_SESSION_DEFAULT = false;
 
         /// <summary>
         /// Constructor that gets the application settings.
@@ -192,18 +190,6 @@ namespace _35CB_SharedHelpers
             set
             {
                 if (AddOrUpdateValue(BG_PLAYBACK_ENABLED_KEYNAME, value)) Save();
-            }
-        }
-
-        public bool IsNewSession
-        {
-            get
-            {
-                return GetValueOrDefault<bool>(IS_NEW_SESSION_KEYNAME, IS_NEW_SESSION_DEFAULT);
-            }
-            set
-            {
-                if (AddOrUpdateValue(IS_NEW_SESSION_KEYNAME, value)) Save();
             }
         }
     }

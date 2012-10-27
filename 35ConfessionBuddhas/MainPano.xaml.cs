@@ -34,7 +34,17 @@ namespace _35ConfessionBuddhas
                 if (result == MessageBoxResult.OK)
                 {
                     BackgroundAudioPlayer.Instance.Stop();
-                    settings.IsNewSession = true;
+
+                    // Need to detach track before you can edit it's properties.
+                    AudioTrack currTrack = BackgroundAudioPlayer.Instance.Track;
+                    BackgroundAudioPlayer.Instance.Track = null;
+
+                    // Append "_new" to indicate to background player that a new session should be started.
+                    currTrack.BeginEdit();
+                    currTrack.Tag += "_new";
+                    currTrack.EndEdit();
+
+                    BackgroundAudioPlayer.Instance.Track = currTrack;
                 }
                 else // Don't want to navigate so return if the user cancelled the prompt.
                     return;

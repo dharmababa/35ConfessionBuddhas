@@ -187,10 +187,17 @@ namespace _35CB_AudioPlaybackAgent
         }
 
         private void PlayTrack(BackgroundAudioPlayer player) {
-            if (settings.IsNewSession)
+            // First, check if we are supposed to start a new session.
+            if ((player.Track != null) && (player.Track.Tag.EndsWith("_new")))
             {
+                // Remove the "new" tag before we reset to the beginning.
+                player.Track.BeginEdit();
+                player.Track.Tag.Remove(player.Track.Tag.Length - 4);
+                player.Track.EndEdit();
+                
+                // Reset to the beginning
                 player.Track = _playlist[0];
-                settings.IsNewSession = false;
+                currentTrackNumber = 0;
             }
             else
                 // Sets the track to play. When the TrackReady state is received, 
